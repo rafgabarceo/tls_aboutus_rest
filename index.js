@@ -1,4 +1,4 @@
-import { DBConnection } from "./db_connect.mjs";
+import { DBConnection } from "./classes/db_connect.mjs";
 
 // Retrieve variables from the environment.
 const db_host = process.env.db_host;
