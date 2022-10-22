@@ -11,25 +11,22 @@ class DBConnection {
     #db_name;
     #db_password;
     #db_db;
-    db_connection;
+    db_connection_pool;
     
     constructor(db_host, db_name, db_password, db_db) {
         this.#db_host = db_host;
         this.#db_name = db_name;
         this.#db_password = db_password,
         this.#db_db = db_db
-        this.db_connection = mysql.createConnection({
+        this.db_connection = mysql.createPool({
             host: db_host,
             user: db_name,
             password: db_password,
-            database: db_db
-        })
-        
-        this.db_connection.connect();
-    }
-
-    disconnect() {
-        this.db_connection.end();
+            database: db_db,
+            waitForConnections: true,
+            connectionLimit: 10,
+            queueLimit: 0
+        });
     }
 }
 
