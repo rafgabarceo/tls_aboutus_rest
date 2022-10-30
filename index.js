@@ -1,20 +1,20 @@
-import { DBConnection } from "./classes/db_connect.mjs";
+import { router as staffer_router } from "./routes/staffer.js";
 
-// Retrieve variables from the environment.
-const db_host = process.env.db_host;
-const db_name = process.env.db_name;
-const db_password = process.env.db_password;
-const db_db = process.env.db_db;
-
-// Initialize connection to the database through the DBConnection class.
-let connection = new DBConnection(
-    db_host,
-    db_name,
-    db_password,
-    db_db
-);
+import express from "express";
 
 
-// Disconnect when done. 
-connection.disconnect();
 
+// Initialize express
+const app = express();
+const port = 3000;
+
+// app.use("/", indexRouter)
+app.use("/staffers", staffer_router);
+
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
+
+app.listen(port, () => {
+    console.log(`Listening on ${port}`);
+})

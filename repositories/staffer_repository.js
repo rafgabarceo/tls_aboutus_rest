@@ -37,7 +37,9 @@ export async function getAllStaffers(){
 }
 
 export function getStaffer(id){
-    // TODO: RETURN SPECIFIC STAFFER 
+    return new Promise((resolve, reject) => {
+        connection.db_connection.query("SELECT * FROM staffer WHERE id=?")
+    })
 }
 
 // Update
