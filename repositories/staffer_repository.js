@@ -23,9 +23,9 @@ export function addSection(name, category, logo){
     // TODO: ADD SINGLE SECTION
 };
 
-export async function getAllStaffers(){
+export async function getAllStaffers(staffer_status = "regular"){
     return new Promise((resolve, reject) => {
-        connection.db_connection.query("SELECT staffer_name,section_id FROM staffer WHERE staffer_status=`regular`", (err, results, fields) => {
+        connection.db_connection.query("SELECT staffer_name,section_id,staffer_status FROM staffer WHERE staffer_status=?", [staffer_status], (err, results, fields) => {
             if(err) {
                 reject(new Error(`An error has occured. Trace: ${err} `));
             } else {
