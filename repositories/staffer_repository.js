@@ -23,10 +23,9 @@ export function addSection(name, category, logo){
     // TODO: ADD SINGLE SECTION
 };
 
-// Read
 export async function getAllStaffers(){
     return new Promise((resolve, reject) => {
-        connection.db_connection.query("SELECT * FROM staffer", (err, results, fields) => {
+        connection.db_connection.query("SELECT staffer_name,section_id FROM staffer WHERE staffer_status=`regular`", (err, results, fields) => {
             if(err) {
                 reject(new Error(`An error has occured. Trace: ${err} `));
             } else {
@@ -36,9 +35,20 @@ export async function getAllStaffers(){
     });
 }
 
-export function getStaffer(id){
+// Default parameter disables the email query. If Top 3 is queried, then the email will be included.
+export function getStaffer(id, isTopThree = 0,){ 
+	query = "SELECT staffer_name,section_id WHERE staffer_id=?";
+	if(isTopThree){
+		query = "SELECT staffer_name,staffer_email,section_id FROM staffer WHERE staffer_id=?";	
+	}
     return new Promise((resolve, reject) => {
-        connection.db_connection.query("SELECT * FROM staffer WHERE id=?")
+        connection.db_connection.query(query, [id], (err, results, fields) => {
+			if(err){
+				reject(new Error(`An error has occured. Trace: ${err}`));
+			} else {
+				resolve(results);
+			}
+		})
     })
 }
 
